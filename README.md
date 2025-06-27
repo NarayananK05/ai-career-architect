@@ -15,7 +15,7 @@
 - Google Generative AI (Gemini API)
 - Python libraries:
   - `python-docx` for DOCX creation
-  - `pdfkit` with `wkhtmltopdf` for PDF generation
+  - `docx2pdf` for PDF generation
 
 ## Project Structure
 

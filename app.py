@@ -60,10 +60,23 @@ with tab2:
                 st.components.v1.html(html_file.read(), height=700, scrolling=True)
 
             with open(docx_path, "rb") as docx_file:
-                st.download_button("📄 Download as DOCX", docx_file, file_name=os.path.basename(docx_path), mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                st.download_button(
+                    "📄 Download as DOCX",
+                    docx_file,
+                    file_name=os.path.basename(docx_path),
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                )
 
-            with open(pdf_path, "rb") as pdf_file:
-                st.download_button("📑 Download as PDF", pdf_file, file_name=os.path.basename(pdf_path), mime="application/pdf")
+            if pdf_path and os.path.exists(pdf_path):
+                with open(pdf_path, "rb") as pdf_file:
+                    st.download_button(
+                        "📑 Download as PDF",
+                        pdf_file,
+                        file_name=os.path.basename(pdf_path),
+                        mime="application/pdf"
+                    )
+            else:
+                st.info("📄 PDF generation not supported on Streamlit Cloud. Please convert the DOCX to PDF locally.")
 
     # -------------------------
     # 🧠 Resume Reviewer Section
@@ -78,13 +91,20 @@ with tab2:
     if st.button("🧐 Review My Resume"):
         if uploaded_resume and target_role and target_company:
             with st.spinner("Analyzing your resume..."):
-                suggestions, review_pdf_path = review_resume(uploaded_resume, target_role, target_company)
+                suggestions, review_pdf_path, review_html_path = review_resume(uploaded_resume, target_role, target_company)
+
             st.success("✅ Review complete!")
             st.markdown("### 📌 Suggestions to Improve Your Resume")
             st.markdown(suggestions)
 
-            with open(review_pdf_path, "rb") as pdf_file:
-                st.download_button("📥 Download Review as PDF", pdf_file, file_name=os.path.basename(review_pdf_path), mime="application/pdf")
+            if review_pdf_path and os.path.exists(review_pdf_path):
+                with open(review_pdf_path, "rb") as pdf_file:
+                    st.download_button("📥 Download Review as PDF", pdf_file, file_name=os.path.basename(review_pdf_path), mime="application/pdf")
+            else:
+                st.info("📄 PDF not available in this environment. View suggestions above or download the HTML version.")
+                if review_html_path and os.path.exists(review_html_path):
+                    with open(review_html_path, "r", encoding="utf-8") as f:
+                        st.download_button("📥 Download Review as HTML", f, file_name=os.path.basename(review_html_path), mime="text/html")
         else:
             st.warning("Please upload a resume and enter both job role and company.")
 

@@ -1,5 +1,5 @@
 streamlit
 python-docx
-pdfkit
+docx2pdf
 openai
 google-generativeai
