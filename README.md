@@ -1,28 +1,48 @@
-# AI Career Architect
+# 🧠 AI Career Architect
 
-**AI Career Architect** is a Streamlit web application designed to assist users in building professional resumes, receiving AI-powered resume reviews, and exploring tailored learning plans and project ideas based on their target job roles.
+**AI Career Architect** is a Streamlit web application that helps users create standout resumes, receive AI-powered reviews, and explore personalized learning plans and projects tailored to their dream roles.
 
-## Features
+---
 
-- Generate structured resumes with optional profile photo
-- Download resumes in both DOCX and PDF formats
-- Upload and review existing resumes using AI, tailored to specific job roles and companies
-- Generate learning plans and project suggestions aligned with career goals
+## 🚀 Features
 
-## Tech Stack
+- ✍️ **Generate Resumes from Scratch**  
+  Automatically build clean, structured resumes using Gemini AI, with optional profile photo.
 
-- Streamlit (frontend interface)
-- Google Generative AI (Gemini API)
-- Python libraries:
-  - `python-docx` for DOCX creation
-  - `docx2pdf` for PDF generation
+- 📄 **Download Resume in DOCX Format**  
+  PDF generation is **optional** (not supported on Streamlit Cloud). Download DOCX and convert locally.
 
-## Project Structure
+- 🧠 **AI-Powered Resume Review**  
+  Upload an existing resume and get feedback tailored to your **target role** and **company**.
 
-├── app.py # Main application script
-├── prompts/ # Prompt templates for resume and review
+- 💡 **Project & Learning Plan Generator**  
+  Get role-based project ideas and curated learning roadmaps instantly.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [Streamlit](https://streamlit.io/)
+- **AI Backend**: Google Gemini API (via `gemini_chat`)
+- **Core Libraries**:
+  - [`python-docx`](https://pypi.org/project/python-docx/) — Resume creation in DOCX
+  - `uuid`, `os` — File handling
+  - Optional: `pdfkit`, `weasyprint` (not used on Streamlit Cloud)
+
+---
+
+## 📁 Project Structure
+
+```text
+├── app.py                     # Main Streamlit app
+├── prompts/
+│   ├── resume_generator.txt   # Prompt for generating resumes
+│   └── reviewer_prompt.txt    # Prompt for reviewing resumes (optional)
 ├── utils/
-│ ├── resume_tools.py # Resume generation logic
-│ ├── reviewer.py # AI resume reviewer
-│ └── project_tools.py # Learning plan and project generator
-└── generated/ # Output directory for resumes and reviews
+│   ├── gemini_app.py          # Gemini API wrapper
+│   ├── resume_tools.py        # Resume generation logic (DOCX + HTML)
+│   ├── reviewer.py            # AI resume reviewer
+│   ├── project_tools.py       # Learning plan + project ideas
+│   └── career_tools.py        # Career path suggestions
+├── generated/                 # Generated resumes and HTML previews
+└── .devcontainer/             # VS Code Dev Container support
