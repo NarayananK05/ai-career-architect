@@ -2,3 +2,5 @@ streamlit
 python-docx
 openai
 google-generativeai
+docx2txt
+PyPDF2
