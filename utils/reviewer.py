@@ -1,9 +1,36 @@
 from utils.gemini_app import gemini_chat
 import os
 import uuid
+import tempfile
+import docx2txt
+import PyPDF2
 
-def review_resume(file_bytes, target_role, target_company):
-    resume_text = file_bytes.read().decode("utf-8") if isinstance(file_bytes, bytes) else file_bytes.read().decode("utf-8")
+def extract_resume_text(uploaded_file):
+    with tempfile.NamedTemporaryFile(delete=False, suffix=uploaded_file.name) as tmp_file:
+        tmp_file.write(uploaded_file.read())
+        tmp_path = tmp_file.name
+
+    if uploaded_file.name.lower().endswith(".pdf"):
+        try:
+            with open(tmp_path, "rb") as f:
+                reader = PyPDF2.PdfReader(f)
+                text = "\n".join(page.extract_text() or "" for page in reader.pages)
+        except Exception as e:
+            text = f"[PDF Error] Could not extract text: {e}"
+
+    elif uploaded_file.name.lower().endswith(".docx"):
+        try:
+            text = docx2txt.process(tmp_path)
+        except Exception as e:
+            text = f"[DOCX Error] Could not extract text: {e}"
+
+    else:
+        text = "[Error] Unsupported file format."
+
+    return text
+
+def review_resume(uploaded_file, target_role, target_company):
+    resume_text = extract_resume_text(uploaded_file)
 
     prompt = f"""
 You are a professional AI resume reviewer.
