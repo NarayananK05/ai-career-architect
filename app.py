@@ -5,6 +5,10 @@ from utils.reviewer import review_resume
 from utils.project_tools import generate_learning_plan, suggest_projects
 from utils.career_tools import suggest_career_paths
 
+if st.query_params.get("ping") == "1":
+    st.write("alive")
+    st.stop()
+
 st.set_page_config(page_title="AI Career Architect", layout="centered")
 st.title("🧠 AI Career Architect")
 st.subheader("Your AI companion for careers 🚀")
