@@ -37,7 +37,6 @@
 ├── app.py                     # Main Streamlit app
 ├── prompts/
 │   ├── resume_generator.txt   # Prompt for generating resumes
-│   └── reviewer_prompt.txt    # Prompt for reviewing resumes (optional)
 ├── utils/
 │   ├── gemini_app.py          # Gemini API wrapper
 │   ├── resume_tools.py        # Resume generation logic (DOCX + HTML)
